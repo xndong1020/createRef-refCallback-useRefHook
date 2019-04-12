@@ -1,39 +1,18 @@
-import React, { Component } from 'react'
+import React, { useRef } from 'react'
 import './App.css'
 
-class App extends Component {
-  setTextInputRef = element => {
-    this.textInput = element
-  }
+const App = props => {
+  const inputEl = useRef(null)
 
-  focusTextInput = () => {
-    // Focus the text input using the raw DOM API
-    if (this.textInput) this.textInput.focus()
+  const handleChange = () => {
+    console.log(inputEl.current.value)
   }
-
-  handleChange = () => {
-    console.log(this.textInput.value)
-  }
-
-  componentDidMount() {
-    // autofocus the input on mount
-    this.focusTextInput()
-  }
-
-  render() {
-    // Use the `ref` callback to store a reference to the text input DOM
-    // element in an instance field (for example, this.textInput).
-    return (
-      <div>
-        <input
-          type="text"
-          ref={this.setTextInputRef}
-          onChange={this.handleChange}
-        />
-        {/* <input type="text" ref={x => (this.textInput = x)} onChange={this.handleChange}/> */}
-      </div>
-    )
-  }
+  
+  return (
+    <div>
+      <input type="text" ref={inputEl} onChange={handleChange} />
+    </div>
+  )
 }
 
 export default App
