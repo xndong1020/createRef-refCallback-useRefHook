@@ -1,25 +1,36 @@
 import React, { Component } from 'react'
-import MyInput from './MyInput'
 import './App.css'
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    // create a ref to store the textInput DOM element
-    this.textInput = React.createRef()
+  setTextInputRef = element => {
+    this.textInput = element
   }
 
-  handleSubmit = () => {
-    console.log(this.textInput.current.value)
+  focusTextInput = () => {
+    // Focus the text input using the raw DOM API
+    if (this.textInput) this.textInput.focus()
+  }
+
+  handleChange = () => {
+    console.log(this.textInput.value)
+  }
+
+  componentDidMount() {
+    // autofocus the input on mount
+    this.focusTextInput()
   }
 
   render() {
-    // tell React that we want to associate the <input> ref
-    // with the `textInput` that we created in the constructor
+    // Use the `ref` callback to store a reference to the text input DOM
+    // element in an instance field (for example, this.textInput).
     return (
       <div>
-        <MyInput ref={this.textInput} />
-        <button onClick={this.handleSubmit}>Submit</button>
+        <input
+          type="text"
+          ref={this.setTextInputRef}
+          onChange={this.handleChange}
+        />
+        {/* <input type="text" ref={x => (this.textInput = x)} onChange={this.handleChange}/> */}
       </div>
     )
   }
